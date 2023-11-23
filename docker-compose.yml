@@ -1,0 +1,26 @@
+version: "3"
+services:
+  rails:
+    build:
+      context: ./ # Railsアプリケーションのパスを指定
+      dockerfile: Dockerfile
+    ports:
+      - "4000:4000"
+    volumes:
+      - ./:/app # Railsアプリケーションのパスを指定
+    depends_on:
+      - postgresql
+    command: bash -c "rm -f tmp/pids/server.pid && bundle exec rails s -p 4000 -b '0.0.0.0'"
+
+  postgresql:
+    image: postgres:14.9
+    volumes:
+      - postgres_volume:/var/lib/postgresql/data
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: password
+    restart: always
+    ports:
+      - "5433:5433"
+volumes:
+  postgres_volume:
