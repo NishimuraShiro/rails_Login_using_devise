@@ -73,4 +73,7 @@ Rails.application.configure do
 
   # Raise error when a before_action's only/except options reference missing actions
   config.action_controller.raise_on_missing_callback_actions = true
+
+  # デフォルトURLの設定（ユーザー登録完了時、メールアドレスに送信され記載されるURLのドメイン名の設定）
+  config.action_mailer.default_url_options = { host: 'localhost', port: 4000 }
 end
