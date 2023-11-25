@@ -11,6 +11,9 @@
   </head>
 
   <body>
+    <%# 以下の追記:ログイン成功時などに出てくるアラートのようなフラッシュメッセージ %>
+    <p class="notice"><%= notice %></p>
+    <p class="alert"><%= alert %></p>
     <%= yield %>
   </body>
 </html>
