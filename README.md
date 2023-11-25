@@ -77,5 +77,19 @@ exec "$@"
 
 はじめに docker エンジンを起動します。<br>
 次に以下のコマンドを順に叩きます。<br>
-`docker-compose build`
+`docker-compose build`<br>
 `docker-compose up -d`
+
+## ⑤devise の導入
+
+### Gemfile に以下の 2 行を追加
+
+`gem 'devise'`<br><br>
+※今回は postgresql を使用するので以下の行も追加します。
+`gem "pg", "~> 1.1"`
+
+### devise の取り込み
+
+以下のコードを順に実行します。
+`docker-compose exec rails bash`<br>
+`bundle install`
