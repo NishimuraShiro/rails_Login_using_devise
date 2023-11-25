@@ -4,11 +4,7 @@
 
 `rails new アプリ名`
 
-## ②Gemfile に「gem 'devise'」を追加
-
-コマンドで`bundle install`を実行
-
-## ③Docker 環境の導入
+## ②Docker 環境の導入
 
 Dockerfile<br>
 
@@ -63,3 +59,23 @@ volumes:
   postgres_volume:
 
 ```
+
+## ③entrypoint.sh ファイルの用意
+
+```
+#!/bin/bash
+set -e
+
+# Remove a potentially pre-existing server.pid for Rails.
+rm -f /app/tmp/pids/server.pid
+
+# Then exec the container's main process (what's set as CMD in the Dockerfile).
+exec "$@"
+```
+
+## ④Docker の実行
+
+はじめに docker エンジンを起動します。<br>
+次に以下のコマンドを順に叩きます。<br>
+`docker-compose build`
+`docker-compose up -d`
