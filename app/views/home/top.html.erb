@@ -1,0 +1,4 @@
+<h1>Home#top</h1>
+<%= "こんにちは #{current_user.email} さん" if user_signed_in? %>
+<br>
+<%= link_to "ログアウト", destroy_user_session_path, data: { turbo_method: :delete } %>
