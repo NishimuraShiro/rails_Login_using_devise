@@ -1,11 +1,16 @@
 Rails.application.routes.draw do
-  devise_for :users
-  # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
+  devise_for :users, controllers: {
+    sessions: 'users/sessions',
+    registrations: 'users/registrations'
+  }
+  # ログイン後のルートパス(以下の1行を外すとルートエラー発生)
+  get 'home/top', to: 'home#top', as: 'home_top'
+  
+  # RESTful(Webサービスのデザインアーキテクチャの一種)なルート定義
+  resources :users
 
-  # Reveal health status on /up that returns 200 if the app boots with no exceptions, otherwise 500.
-  # Can be used by load balancers and uptime monitors to verify that the app is live.
-  get "up" => "rails/health#show", as: :rails_health_check
-
-  # Defines the root path route ("/")
-  # root "posts#index"
+  # 以下のコードにより、パスを変えることができるようになる。http://localhost:4000/sign_in
+  # devise_scope :user do
+  #   get '/sign_in', to: 'users/sessions#new'
+  # end
 end
