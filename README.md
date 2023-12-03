@@ -327,13 +327,42 @@ ja:
   end
 ```
 
-<br><br>config/routes.rb に以下のコードを追記します。<br>
+<br><br>ログアウト後のリダイレクト先も追記します。
+
+```
+  def after_sign_out_path_for(resource)
+    new_user_session_path
+  end
+```
+
+<br><br>アクション前にユーザーのログイン状態を確認し、未ログインの場合はログインページにリダイレクトし、ログイン済みの場合は devise コントローラが機能するように以下のコードも追記します。
+
+```
+before_action :check_login, unless: :devise_controller?
+# 省略
+  private
+
+  def check_login
+    unless user_signed_in?
+      redirect_to new_user_session_path
+    end
+  end
+```
+
+<br><br>完成後の app/controllers/application_controller.rb はこちらになります。<br>
+https://github.com/NishimuraShiro/rails_Login_using_devise/blob/main/app/controllers/application_controller.rb
+
+<br><br>config/routes.rb にログイン後のルートパスを指定するために以下のコードを追記します。<br>
 
 ```
 get 'home/top', to: 'home#top', as: 'home_top'
 ```
 
-<br>app/views/home/top.html.erb (ログイン後に表示されるファイル)を以下のように修正します。<br>
+<br>RESTfull なルートを定義するために以下のコードも追記します。<br>
+`resources :users`<br>
+完成後の config/routes.rb はこちらになります。<br>
+https://github.com/NishimuraShiro/rails_Login_using_devise/blob/main/config/routes.rb
+<br><br>app/views/home/top.html.erb (ログイン後に表示されるファイル)を以下のように修正します。<br>
 
 ```
 <h1>Home#top</h1>
